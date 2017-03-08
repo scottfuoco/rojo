@@ -1,11 +1,13 @@
+const RojoSays = require('../src/rojo-says');
+
 describe('rojoSays', () => {
   let test;
   describe('.listen', () => {
     beforeEach(() => {
       test = {};
-      test.subject = require('../src/rojo-says');
-      test.rojo = new test.subject();
+      test.rojo = new RojoSays();
     });
+
     describe('when passed nothing"', () => {
       it('should return the string Sorry I dont understand', () => {
         const emptyRegex = /Sorry I dont understand/i;
@@ -15,7 +17,7 @@ describe('rojoSays', () => {
     });
 
     describe('when passed a non question', () => {
-      it('should return a string containing am or pm', () => {
+      it('should return Sorry I dont understand', () => {
         const noQuestionRegex = /Sorry I dont understand/i;
         const testString = 'Ringu is coo.';
         const result = noQuestionRegex.test(test.rojo.listen(testString));
@@ -42,32 +44,35 @@ describe('rojoSays', () => {
     });
 
     describe('when passed string that starts with "why"', () => {
-      describe('when the string contains "ringu"')
-      it('should return the string "because"', () => {
-        const whyRegex = /because/i;
-        const testString = 'Why ringu';
-        const result = whyRegex.test(test.rojo.listen(testString));
-        expect(result).toBe(true);
+      describe('when the string contains "ringu"', () => {
+        it('should return the string "because"', () => {
+          const whyRegex = /because/i;
+          const testString = 'Why ringu';
+          const result = whyRegex.test(test.rojo.listen(testString));
+          expect(result).toBe(true);
+        });
       });
     });
 
     describe('when passed string that starts with "why"', () => {
-      describe('when the string contains "ringo"')
-      it('should return the string "because"', () => {
-        const whyRegex = /did you mean Ringu.*/i;
-        const testString = 'Why ringo';
-        const result = whyRegex.test(test.rojo.listen(testString));
-        expect(result).toBe(true);
+      describe('when the string contains "ringo"', () => {
+        it('should return the string "because"', () => {
+          const whyRegex = /did you mean Ringu.*/i;
+          const testString = 'Why ringo';
+          const result = whyRegex.test(test.rojo.listen(testString));
+          expect(result).toBe(true);
+        });
       });
     });
 
     describe('when passed string that starts with "why"', () => {
-      describe('when the string doesnt contain "ringo" or "ringu"')
-      it('should return the string "because"', () => {
-        const whyRegex = /ask ringu/i;
-        const testString = 'Why Ringi?';
-        const result = whyRegex.test(test.rojo.listen(testString));
-        expect(result).toBe(true);
+      describe('when the string doesnt contain "ringo" or "ringu"', () => {
+        it('should return the string "because"', () => {
+          const whyRegex = /ask ringu/i;
+          const testString = 'Why Ringi?';
+          const result = whyRegex.test(test.rojo.listen(testString));
+          expect(result).toBe(true);
+        });
       });
     });
 
