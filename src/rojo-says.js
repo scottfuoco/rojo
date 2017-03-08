@@ -1,12 +1,21 @@
-class RojoSays {
-  constructor() {
+const RojoKnows = require('./rojo-knows');
 
+class RojoSays {
+  getRandomElement(arr) {
+    const index = Math.floor(Math.random() * arr.length);
+    return arr[index];
+  }
+
+  regexMatchTest(input, re) {
+    return input.match(re) ?
+      input.match(re)[0] :
+      ''
   }
 
   listen(userInput) {
-    const cleanUserInput = userInput.toLowerCase();
+    if (!userInput) return 'Sorry I dont understand';
 
-    const thoughts = think(cleanUserInput);
+    const cleanUserInput = userInput.toLowerCase();
 
     switch (this.questionType(cleanUserInput)) {
       case 'when':
@@ -21,13 +30,9 @@ class RojoSays {
             return 'Sorry I don\'t understand';
         }
       case 'who':
-        const names = ['Ringo', 'Jon', 'Justin', 'Scott', 'DJ'];
-        const selection = Math.floor(Math.random() * 5);
-        return `${names[selection]} did it.`;
+        return `${this.getRandomElement(RojoKnows.names)} did it.`;
       case 'where':
-        const locations = ['RED', 'McDonalds', 'Home'];
-        const selection = Math.floor(Math.random() * 3);
-        return `It's at the ${locations[selection]}`;;
+        return `It is at the ${this.getRandomElement(RojoKnows.locations)}`;
       case 'why':
         switch (this.ringoOrRingu(cleanUserInput)) {
           case 'ringu':
@@ -46,18 +51,17 @@ class RojoSays {
 
   questionType(input) {
     const re = /(who|what|when|where|why)/i;
-    console.log(input.match(re));
-    return input.match(re)[0] || null;
+    return this.regexMatchTest(input, re)
   }
 
   dayOrTime(input) {
     const re = /(day|time)/i;
-    return input.match(re)[0] || null;
+    return this.regexMatchTest(input, re)
   }
 
   ringoOrRingu(input) {
     const re = /(ringo|ringu)/i;
-    return input.match(re)[0] || null;
+    return this.regexMatchTest(input, re)
   }
 }
 
